@@ -1,41 +1,50 @@
-import React from 'react';
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import React, { useState } from 'react';
+import
+{
+  ChakraProvider, Box, Grid, theme, Text,
+  Container, Button, Image, VStack, HStack
+} from '@chakra-ui/react';
 
-function App() {
+function App()
+{
+  const [animal, setAnimal] = useState("Mèo");
+  const [confidence, setConfidence] = useState(100);
+
   return (
     <ChakraProvider theme={theme}>
       <Box textAlign="center" fontSize="xl">
         <Grid minH="100vh" p={3}>
           <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
+          <Container>
+            <VStack spacing={4}>
+              <Image
+                boxSize='60%'
+                objectFit='cover'
+                src='./cat.jpg'
+                alt='Animal'
+                fallbackSrc='https://via.placeholder.com/160'
+              />
+
+              <HStack>
+                <Button colorScheme='teal' variant='outline'>
+                  Nhận diện
+                </Button>
+
+                <Button colorScheme='teal' variant='outline'>
+                  Chọn ảnh
+                </Button>
+              </HStack>
+
+              <VStack>
+                <Text>Kết quả : {animal}</Text>
+                <Text>Độ tin cậy : {confidence} (%)</Text>
+              </VStack>
+            </VStack>
+          </Container>
         </Grid>
       </Box>
-    </ChakraProvider>
+    </ChakraProvider >
   );
 }
 
