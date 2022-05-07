@@ -27,7 +27,7 @@ function App()
 
   const handleRecognition = async () =>
   {
-    const formData = new FormData();
+    let formData = new FormData();
     formData.append("myAnimal", selectedImage);
     const response = await callAPI.post("predict", formData, {
       headers: {
