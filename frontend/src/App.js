@@ -14,6 +14,21 @@ function App()
     confidence: 100
   });
 
+  const [image, setImage] = useState("./cat.jpg");
+  const [selectedImage, setSelectedImage] = useState();
+
+  const handleFileSelected = (e) =>
+  {
+    e.preventDefault();
+    setSelectedImage(e.target.files[0]);
+    setImage(URL.createObjectURL(e.target.files[0]));
+  };
+
+  const handleRecognition = () =>
+  {
+
+  }
+
   return (
     <ChakraProvider theme={theme}>
       <Box textAlign="center" fontSize="xl">
@@ -24,19 +39,26 @@ function App()
               <Image
                 boxSize='60%'
                 objectFit='cover'
-                src='./cat.jpg'
+                src={image}
                 alt='Animal'
                 fallbackSrc='https://via.placeholder.com/160'
               />
 
               <HStack>
-                <Button colorScheme='teal' variant='outline' leftIcon={<ViewIcon />}>
+                <Button colorScheme='teal' variant='outline'
+                  leftIcon={<ViewIcon />} onClick={handleRecognition}>
                   Nhận diện
                 </Button>
 
-                <Button colorScheme='teal' variant='outline' leftIcon={<LinkIcon />}>
-                  Chọn ảnh
-                </Button>
+                <input accept="image/*" type="file" style={{ display: 'none' }}
+                  id="contained-button-file" onChange={handleFileSelected} multiple />
+                <label htmlFor="contained-button-file">
+                  <Button as={"span"} colorScheme='teal'
+                    variant='outline' leftIcon={<LinkIcon />}
+                    style={{ cursor: 'pointer' }}>
+                    Chọn ảnh
+                  </Button>
+                </label>
               </HStack>
 
               <VStack>
