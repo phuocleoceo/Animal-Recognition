@@ -5,11 +5,14 @@ import
   ChakraProvider, Box, Grid, theme, Text,
   Container, Button, Image, VStack, HStack
 } from '@chakra-ui/react';
+import { ViewIcon, LinkIcon } from "@chakra-ui/icons"
 
 function App()
 {
-  const [animal, setAnimal] = useState("Mèo");
-  const [confidence, setConfidence] = useState(100);
+  const [recognition, setRecognition] = useState({
+    animal: "Mèo",
+    confidence: 100
+  });
 
   return (
     <ChakraProvider theme={theme}>
@@ -27,18 +30,18 @@ function App()
               />
 
               <HStack>
-                <Button colorScheme='teal' variant='outline'>
+                <Button colorScheme='teal' variant='outline' leftIcon={<ViewIcon />}>
                   Nhận diện
                 </Button>
 
-                <Button colorScheme='teal' variant='outline'>
+                <Button colorScheme='teal' variant='outline' leftIcon={<LinkIcon />}>
                   Chọn ảnh
                 </Button>
               </HStack>
 
               <VStack>
-                <Text>Kết quả : {animal}</Text>
-                <Text>Độ tin cậy : {confidence} (%)</Text>
+                <Text>Kết quả : {recognition.animal}</Text>
+                <Text>Độ tin cậy : {recognition.confidence} (%)</Text>
               </VStack>
             </VStack>
           </Container>
