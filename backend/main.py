@@ -19,9 +19,9 @@ app.add_middleware(
 
 @app.post("/predict")
 async def predict_animal(image: UploadFile):
-    animal = predict(await image.read())
+    animal, confidence = predict(await image.read())
     # Mock predict
-    return {"animal": animal}
+    return {"animal": animal, "confidence": confidence}
 
 
 if __name__ == '__main__':

@@ -11,8 +11,11 @@ model = load_model("animal.h5")
 def predict(image: bytes):
     image = read_image(image)
     pred = model.predict([image])[0]
+    # Nhãn dự đoán
     animal = label_list[np.argmax(pred)]
-    return animal
+    # Độ tin cậy, làm tròn 2 chữ số
+    confidence = round(np.max(pred)*100, 2)
+    return animal, confidence
 
 
 def read_image(file: bytes):
