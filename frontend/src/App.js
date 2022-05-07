@@ -25,16 +25,22 @@ function App()
     setImage(URL.createObjectURL(e.target.files[0]));
   };
 
+  // Convert file to base64 string
+  const getBase64 = (file) =>
+  {
+    return new Promise((resolve, reject) =>
+    {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+  }
+
   const handleRecognition = async () =>
   {
-    let formData = new FormData();
-    formData.append("myAnimal", selectedImage);
-    const response = await callAPI.post("predict", formData, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'multipart/form-data'
-      }
-    });
+    const animal_img = await getBase64(selectedImage);
+    const response = await callAPI.post("predict", { uri: animal_img });
     setRecognition({
       animal: response.data.animal,
       confidence: response.data.confidence

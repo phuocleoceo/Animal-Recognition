@@ -1,6 +1,7 @@
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI, UploadFile, File
 from recognition import predict
+from pydantic import BaseModel
+from fastapi import FastAPI
 import uvicorn
 
 
@@ -17,9 +18,13 @@ app.add_middleware(
 )
 
 
+class AnimalImage(BaseModel):
+    uri: str
+
+
 @app.post("/predict")
-async def predict_animal(image: UploadFile = File(...)):
-    animal, confidence = predict(await image.read())
+async def predict_animal(image: AnimalImage):
+    animal, confidence = predict(image.uri)
     # Mock predict
     return {"animal": animal, "confidence": confidence}
 
