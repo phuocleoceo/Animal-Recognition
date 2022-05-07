@@ -6,6 +6,7 @@ import
   Container, Button, Image, VStack, HStack
 } from '@chakra-ui/react';
 import { ViewIcon, LinkIcon } from "@chakra-ui/icons"
+import callAPI from "./api/apiService";
 
 function App()
 {
@@ -24,9 +25,20 @@ function App()
     setImage(URL.createObjectURL(e.target.files[0]));
   };
 
-  const handleRecognition = () =>
+  const handleRecognition = async () =>
   {
-
+    const formData = new FormData();
+    formData.append("myAnimal", selectedImage);
+    const response = await callAPI.post("predict", formData, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    setRecognition({
+      animal: response.data.animal,
+      confidence: response.data.confidence
+    });
   }
 
   return (
